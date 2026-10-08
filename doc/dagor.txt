@@ -1,0 +1,54 @@
+*dagor.txt*  Tree-sitter highlighting for Dagor Quirrel and BLK files
+
+==============================================================================
+INTRODUCTION                                                        *dagor.nvim*
+
+dagor.nvim gives tree-sitter highlighting for two text formats of the Dagor
+Engine: Quirrel (*.nut) and BLK (*.blk). It sets the filetypes, adds the two
+parsers to nvim-treesitter and starts highlighting. A parser is built the
+first time you open a file of its language.
+
+Requirements:
+- Neovim 0.12 or newer
+- nvim-treesitter on the `main` branch
+- the `tree-sitter` CLI, a C compiler, `curl` and `tar`
+
+Run |:checkhealth| dagor to check them.
+
+==============================================================================
+SETUP                                                          *dagor.setup()*
+
+The plugin works with no setup call. To change an option, call >lua
+    require("dagor").setup({ install = false })
+<
+or set `vim.g.dagor` before the plugin loads. The options and their defaults:
+
+    detect       true    Map *.nut and *.blk to the first filetype of their
+                         language.
+    install      true    Build a missing parser when its filetype opens.
+    highlight    true    Start tree-sitter highlighting in matching buffers.
+    filetypes    { quirrel = { "quirrel" }, blk = { "blk" } }
+                         Filetypes that use each language. Use
+                         `{ quirrel = { "squirrel" }, blk = { "datablock" } }`
+                         to keep other filetype names.
+    install_info {}      Override the parser source per language. It is merged
+                         over the defaults. With `path`, the parser is built
+                         from a local checkout and its `queries/` directory is
+                         linked:
+                         `{ quirrel = { path = "~/code/tree-sitter-quirrel" } }`
+
+==============================================================================
+FUNCTIONS                                                    *dagor.install()*
+
+require("dagor").install({opts})
+    Install both parsers and return the nvim-treesitter task. Use `:wait()`
+    on it in a build step. {opts} can have `force = true` to build again.
+
+==============================================================================
+UPDATES                                                       *dagor-updates*
+
+Each grammar is pinned to a release. A new version of the plugin moves the
+pins. Run `:TSUpdate` after you update the plugin. After a change to a local
+grammar, run `:TSInstall! quirrel blk`.
+
+ vim:tw=78:ts=8:ft=help:norl:

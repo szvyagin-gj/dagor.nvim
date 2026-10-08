@@ -1,0 +1,8 @@
+// Sample data block
+include "base.blk"
+
+material{
+  name:t="metal"
+  scale:p2=1.0, 1.0
+  enabled:b=yes
+}
