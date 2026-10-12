@@ -14,4 +14,11 @@ return {
 			queries = "queries",
 		},
 	},
+	daslang = {
+		install_info = {
+			url = "https://github.com/GaijinEntertainment/tree-sitter-daslang",
+			revision = "594fe7c4f1d0c7381bb84b43f9daf6187f14cce3", -- v0.6.0
+			queries = "queries",
+		},
+	},
 }

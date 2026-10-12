@@ -61,6 +61,18 @@ case("sample.blk", "blk", "blk", {
 	"property",
 	"type.builtin",
 })
+case("sample.das", "daslang", "daslang", {
+	"keyword.import",
+	"keyword.type",
+	"keyword.function",
+	"keyword.repeat",
+	"keyword.return",
+	"attribute",
+	"function",
+	"function.call",
+	"type.builtin",
+	"string.escape",
+})
 
 local dagor = require("dagor")
 check(dagor.install():wait(60000) == true, "install() succeeds when the parsers are present")

@@ -1,14 +1,15 @@
 # dagor.nvim
 
-Tree-sitter highlighting in Neovim for the text formats of the
+Tree-sitter highlighting in Neovim for the languages and data formats of the
 [Dagor Engine](https://github.com/GaijinEntertainment/DagorEngine):
 
 | Language | Files   | Grammar                                                                           |
 | -------- | ------- | --------------------------------------------------------------------------------- |
 | Quirrel  | `*.nut` | [tree-sitter-quirrel](https://github.com/GaijinEntertainment/tree-sitter-quirrel) |
 | BLK      | `*.blk` | [tree-sitter-blk](https://github.com/GaijinEntertainment/tree-sitter-blk)         |
+| Daslang  | `*.das` | [tree-sitter-daslang](https://github.com/GaijinEntertainment/tree-sitter-daslang) |
 
-The plugin sets the filetypes, adds the two parsers to nvim-treesitter and starts highlighting. A parser is
+The plugin sets the filetypes, adds the parsers to nvim-treesitter and starts highlighting. A parser is
 downloaded and built the first time you open a file of its language.
 
 ## Requirements
@@ -47,12 +48,13 @@ These are the defaults:
 
 ```lua
 require("dagor").setup({
-  detect = true,     -- map *.nut and *.blk to the first filetype of their language
+  detect = true,     -- map *.nut, *.blk and *.das to the first filetype of their language
   install = true,    -- build a missing parser when its filetype opens
   highlight = true,  -- start tree-sitter highlighting in matching buffers
   filetypes = {      -- filetypes that use each language
     quirrel = { "quirrel" },
     blk = { "blk" },
+    daslang = { "daslang" },
   },
   install_info = {}, -- override the parser source, see below
 })
@@ -78,18 +80,19 @@ require("dagor").setup({
   install_info = {
     quirrel = { path = "~/code/tree-sitter-quirrel" },
     blk = { path = "~/code/tree-sitter-blk" },
+    daslang = { path = "~/code/tree-sitter-daslang" },
   },
 })
 ```
 
-After a change to a grammar, run `:TSInstall! quirrel blk` to build the parsers again.
+After a change to a grammar, run `:TSInstall! quirrel blk daslang` to build the parsers again.
 
 ## Parsers and updates
 
-The plugin pins each grammar to a release (Quirrel 4.43.2, BLK 1.0.0). A new version of the plugin moves the pins.
-Run `:TSUpdate` after you update the plugin.
+The plugin pins each grammar to a release (Quirrel 4.43.2, BLK 1.0.0, Daslang 0.6.0). A new version of the plugin
+moves the pins. Run `:TSUpdate` after you update the plugin.
 
-To install both parsers at once, for example in a build step:
+To install all parsers at once, for example in a build step:
 
 ```lua
 require("dagor").install():wait(300000)
@@ -102,7 +105,7 @@ require("dagor").install():wait(300000)
 
 ## Tests
 
-`make test` runs a smoke test in an empty data directory. It downloads and builds both parsers from GitHub, so it
+`make test` runs a smoke test in an empty data directory. It downloads and builds all parsers from GitHub, so it
 needs network access. Set `NVIM_TREESITTER` to your nvim-treesitter checkout if it is not in the default path.
 
 ## License

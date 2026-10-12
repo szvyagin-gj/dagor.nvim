@@ -1,7 +1,7 @@
 local M = {}
 
 ---@class dagor.Config
----@field detect boolean map *.nut and *.blk to the first filetype of their language
+---@field detect boolean map *.nut, *.blk and *.das to the first filetype of their language
 ---@field install boolean build a missing parser the first time its filetype opens
 ---@field highlight boolean start tree-sitter highlighting in matching buffers
 ---@field filetypes table<string, string[]> filetypes that use each language
@@ -10,11 +10,11 @@ M.defaults = {
 	detect = true,
 	install = true,
 	highlight = true,
-	filetypes = { quirrel = { "quirrel" }, blk = { "blk" } },
+	filetypes = { quirrel = { "quirrel" }, blk = { "blk" }, daslang = { "daslang" } },
 	install_info = {},
 }
 
-local EXTENSIONS = { nut = "quirrel", blk = "blk" }
+local EXTENSIONS = { nut = "quirrel", blk = "blk", das = "daslang" }
 
 local augroup = vim.api.nvim_create_augroup("dagor", { clear = true })
 local config = vim.deepcopy(M.defaults)
@@ -145,7 +145,7 @@ function M.setup(opts)
 	end
 end
 
---- Install both parsers; returns the nvim-treesitter task.
+--- Install all parsers; returns the nvim-treesitter task.
 ---@param opts? { force?: boolean }
 function M.install(opts)
 	local langs = vim.tbl_keys(require("dagor.parsers"))

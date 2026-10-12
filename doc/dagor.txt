@@ -3,10 +3,11 @@
 ==============================================================================
 INTRODUCTION                                                        *dagor.nvim*
 
-dagor.nvim gives tree-sitter highlighting for two text formats of the Dagor
-Engine: Quirrel (*.nut) and BLK (*.blk). It sets the filetypes, adds the two
-parsers to nvim-treesitter and starts highlighting. A parser is built the
-first time you open a file of its language.
+dagor.nvim gives tree-sitter highlighting for three languages and data
+formats of the Dagor Engine: Quirrel (*.nut), BLK (*.blk) and Daslang (*.das).
+It sets the filetypes, adds the parsers to nvim-treesitter and starts
+highlighting. A parser is built the first time you open a file of its
+language.
 
 Requirements:
 - Neovim 0.12 or newer
@@ -23,11 +24,12 @@ The plugin works with no setup call. To change an option, call >lua
 <
 or set `vim.g.dagor` before the plugin loads. The options and their defaults:
 
-    detect       true    Map *.nut and *.blk to the first filetype of their
-                         language.
+    detect       true    Map *.nut, *.blk and *.das to the first filetype of
+                         their language.
     install      true    Build a missing parser when its filetype opens.
     highlight    true    Start tree-sitter highlighting in matching buffers.
-    filetypes    { quirrel = { "quirrel" }, blk = { "blk" } }
+    filetypes    { quirrel = { "quirrel" }, blk = { "blk" },
+                   daslang = { "daslang" } }
                          Filetypes that use each language. Use
                          `{ quirrel = { "squirrel" }, blk = { "datablock" } }`
                          to keep other filetype names.
@@ -41,7 +43,7 @@ or set `vim.g.dagor` before the plugin loads. The options and their defaults:
 FUNCTIONS                                                    *dagor.install()*
 
 require("dagor").install({opts})
-    Install both parsers and return the nvim-treesitter task. Use `:wait()`
+    Install all parsers and return the nvim-treesitter task. Use `:wait()`
     on it in a build step. {opts} can have `force = true` to build again.
 
 ==============================================================================
@@ -49,6 +51,6 @@ UPDATES                                                       *dagor-updates*
 
 Each grammar is pinned to a release. A new version of the plugin moves the
 pins. Run `:TSUpdate` after you update the plugin. After a change to a local
-grammar, run `:TSInstall! quirrel blk`.
+grammar, run `:TSInstall! quirrel blk daslang`.
 
  vim:tw=78:ts=8:ft=help:norl:
